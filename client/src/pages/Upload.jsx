@@ -21,27 +21,26 @@ const Upload = () => {
     e.preventDefault();
     const { title, artist, tempo, link } = form;
 
-    try {
-      setLoading(true);
-      const { data } = await axios.post('/upload', form, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      setLoading(false);
-      setData(data);
-      navigate('/songs');
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+    const formData = JSON.stringify({
+      title,
+      artist,
+      tempo,
+      link
+    });
 
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const result = await axios.post('/api/upload', formData, config);
+    console.log(result.data.data); 
   }
   
   let name,value;
 
   const handleChange = (e) => {
-    console.log(e);
     name = e.target.name;
     value = e.target.value;
 
