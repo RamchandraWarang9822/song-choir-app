@@ -20,28 +20,21 @@ const Upload = () => {
 
     e.preventDefault();
     const { title, artist, tempo, link } = form;
-    
-    const res = await axios.post('/api/v1',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title, artist, tempo, link
-      })
-    });
 
-    const data = await res.json();
-
-    if (data.status === 422 || !data) {
-      window.alert('Invalid Registration');
-      console.log('Invalid Registration');
-    } else {
-      window.alert('Registration Successful');
-      console.log('Registration Successful');
-      navigate('/api/v1');
+    try {
+      setLoading(true);
+      const { data } = await axios.post('/upload', form, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      setLoading(false);
+      setData(data);
+      navigate('/songs');
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
-    
 
   }
   
