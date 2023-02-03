@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormField, Loader } from '../components';
 import axios from "axios";
-import { useEffect } from 'react';
 
 const Upload = () => {
 
